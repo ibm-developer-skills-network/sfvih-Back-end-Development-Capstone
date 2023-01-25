@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <meta charset="UTF-8">
+        <title>Concert List</title>
+    </head>
+    <!--Navigation bar-->
+  <!-- Navigation bar -->
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                  <a class="navbar-brand" href="#">Popular Concert</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li>
+                    <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                    <a class="btn btn-link" href="{% url 'concert:logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li>
+                    <form class="form-inline" action="{% url 'concert:login' %}" method="post">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Username" name="username" >
+                            <input type="password" class="form-control" placeholder="Password" name="psw" >
+                            <button class="btn btn-primary" type="submit">Login</button>
+                            <a class="btn btn-link" href="{% url 'concert:registration' %}">Sign Up</a>
+                        </div>
+                    </form>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <body>
+    <!--Render concert list as card columns here -->
+            <div class="container">
+            <div class="card-columns">
+                {% for concert in concert_list %}
+                <div class="col-auto mb-3">
+                    <div class="card">
+                        <!--Concert Poster image-->
+                        <img class="card-img-left"
+                             src="{{MEDIA_ROOT}}/{{ concert.poster }}"
+                             width="320" height="480">
+                        <div class="card-body bg-light">
+                            <h5 class="card-title">{{concert.title}}</h5>
+                            <p class="card-text">{{concert.artist_name}}</p>
+                            <p class="card-text">Enrollment: <b>{{concert.total_registrations}}</b></p>
+                            <p class="card-text">{{concert.release_date}}</p>
+                             <form action="{% url 'concert:concert_register' concert.id %}" method="post">
+                                  {% csrf_token %}
+                                  <input class="btn btn-primary"  type="submit"
+                                         value="{% if concert.is_registrated %}Enter{% else %}Register{% endif %} ">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+
+</html>
