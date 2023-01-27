@@ -9,7 +9,7 @@ class Song(models.Model):
     artist_name = models.CharField(max_length=100)
     length = models.IntegerField()
     pub_date = models.DateTimeField('publish date')
-    image_url = models.CharField(max_length=64, null=True)
+    image_url = models.CharField(max_length=256, null=True)
     genres = models.CharField(max_length=200, null=True)
     lyrics = models.CharField(max_length=1000)
 
