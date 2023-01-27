@@ -7,9 +7,13 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.views import generic
 import logging
+from .restcalls import *
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
+
+lyric_service_url = "https://dummy.restapiexample.com/api/v1/employee/1"
+
 # Create your views here.
 def get_concert_list_view(request):
     if request.method == "GET":
@@ -57,6 +61,19 @@ class ConcertDetailView(generic.DetailView):
     model = Concert
     template_name = 'concert/concert_detail_bootstrap.html'
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        concert_id = self.kwargs['pk']
+        concert = Concert.objects.get(pk=concert_id)
+        for song in concert.songs.all():
+            lyrics = get_lyrics(lyric_service_url)
+            print(lyrics)
+            song.lyrics = lyrics
+            song.save()
+        context['concert'] = concert
+        return context
 
 def registration_request(request):
     context = {}
