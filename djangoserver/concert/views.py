@@ -12,7 +12,7 @@ from .restcalls import *
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
-lyric_service_url = "https://dummy.restapiexample.com/api/v1/employee/1"
+base_lyric_service_url = "https://dummy.restapiexample.com/api/v1/employee/"
 
 # Create your views here.
 def get_concert_list_view(request):
@@ -68,7 +68,7 @@ class ConcertDetailView(generic.DetailView):
         concert_id = self.kwargs['pk']
         concert = Concert.objects.get(pk=concert_id)
         for song in concert.songs.all():
-            lyrics = get_lyrics(lyric_service_url)
+            lyrics = get_lyrics(base_lyric_service_url, song.pk)
             print(lyrics)
             song.lyrics = lyrics
             song.save()
