@@ -13,18 +13,8 @@ import requests as req
 
 # Create your views here.
 
-
-def login_view(request):
-    pass
-
-
 def signup(request):
     pass
-
-
-def logout_view(request):
-    pass
-
 
 
 def index(request):
@@ -38,6 +28,11 @@ def songs(request):
 def photos(request):
     pass
 
+def login_view(request):
+    pass
+
+def logout_view(request):
+    pass
 
 def concerts(request):
     pass
