@@ -10,6 +10,7 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y python3.9 python3.9-venv
 echo "Checking the Python version..."
 python3.9 --version
 
+
 echo "Creating a Python virtual environment"
 python3.9 -m venv ~/venv
 
