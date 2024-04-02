@@ -21,7 +21,10 @@ echo "source ~/venv/bin/activate" >> ~/.bashrc
 
 echo "Installing Python dependencies..."
 source ~/venv/bin/activate && python3.9 -m pip install --upgrade pip wheel
-source ~/venv/bin/activate && pip install -r requirements.txt
+source ~/venv/bin/activate && python3.9 -m pip install -r requirements.txt
+# source ~/venv/bin/activate && python3.9 -m pip install pytest  # Add this line for pytest
+
+
 
 echo "Starting the Postgres Docker container..."
 make db
